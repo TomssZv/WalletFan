@@ -1,0 +1,19 @@
+{
+  "categories": [
+    {
+      "name": "Food"
+    }, 
+    {
+      "name": "Misc"
+    },
+    {
+      "name": "Clothes"
+    },
+    {
+      "name": "Gas"
+    },
+    {
+      "name": "Health"
+    }
+  ]
+}

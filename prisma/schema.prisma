@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id  Int @id @default(autoincrement())
+  name  String @unique
+  transaction Transaction[]
+}
+
+model Transaction {
+  id  Int @id @default(autoincrement())
+  amount Float 
+  deducted Boolean
+  isLongTerm Boolean @default(false)
+  comment String
+  createdAt DateTime @default(now())
+  category Category @relation(references: [id], fields: [categoryId])
+  categoryId Int
+  group Group? @relation(fields: [groupId], references: [id])
+  groupId Int?
+  longTerm LongTermTransactions?
+}
+
+model LongTermTransactions {
+  id  Int @id @default(autoincrement())
+  repeateDays Int
+  startDate DateTime
+  stopDate  DateTime?
+  transaction Transaction @relation(fields: [transactionId], references: [id])
+  transactionId Int @unique
+}
+
+model Group {
+  id  Int @id @default(autoincrement())
+  name  String
+  transaction Transaction[]
+}
+
+model Balance {
+  id  Int @id @default(autoincrement())
+  balance Float @default(0)
+}
