@@ -29,15 +29,15 @@ const GroupForm: React.FC<GroupFormProps> = ({ isFormOpen }) => {``
   }
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className="p-4 border rounded-lg border-black bg-neutral-200">
+    <form onSubmit={(e) => handleSubmit(e)} className="p-4 border rounded-lg border-black bg-neutral-200 bg-white">
       <input
-        className="bg-transparent"
+        className="bg-transparent p-1"
         type="text"
         placeholder="Group name"
         value={groupName ?? ''}
         onChange={(e) => {setGroupName(e.target.value)}}
         required
-      ></input>
+      />
       <div className="flex gap-3 mt-3">
         <button type="submit">Create</button>
         <button

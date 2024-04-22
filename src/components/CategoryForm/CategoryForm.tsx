@@ -30,21 +30,21 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ isFormOpen }) => {
 
   return (
     <form
-      className="p-4 border rounded-lg border-black bg-neutral-200"
+      className="p-4 border rounded-lg border-black bg-neutral-200 bg-white"
       onSubmit={(e) => handleSubmit(e)}
     >
       <input
-        className="bg-transparent"
+        className="bg-transparent p-1"
         type="text"
         placeholder="Category name"
         value={categoryName ?? ''}
         onChange={(e) => {setCategoryName(e.target.value)}}
         required
-      ></input>
+      />
       <div className="flex gap-3 mt-3">
         <button type="submit">Create</button>
         <button
-          className="text-red-500 "
+          className="text-red-500"
           onClick={(e) => {
             e.preventDefault(), isFormOpen(false);
           }}
