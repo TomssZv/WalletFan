@@ -39,7 +39,7 @@ export async function POST(request: Request) {
       amount: amount,
       deducted: deducted,
       isLongTerm: false,
-      comment: '',
+      comment: comment,
       categoryId: categoryId,
       groupId: groupId 
     }

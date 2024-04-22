@@ -2,21 +2,28 @@
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import TransactionButtonWrapper from "../transactionButtonWrapper/transactionButtonWrapper"
+import toast from "react-hot-toast"
 
 const AddTransaction: React.FC = () => {
   const [amount, setAmount] = useState(0)
   const [deducted, setDeducted] = useState(true)
   const [categories, setCategories] = useState(Array())
-  const [selectedCategory, setSelectedCategory] = useState<null | number>(null)
+  const [selectedCategory, setSelectedCategory] = useState<null | number | string>(null)
   const [selectedGroup, setSelectedGroup] = useState<null | number>(null)
   const [groups, setGroups] = useState(Array())
+  const [comment, setComment] = useState<null | string>(null)
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
 
-    if (!selectedCategory) {
-      alert("Select a category")
+    if (selectedCategory === "-" || !selectedCategory) {
+      toast.error("Select a category!")
       return;
+    }
+
+    if (amount === 0) {
+      toast.error("Ammount can't be 0")
+      return
     }
 
     const updatedBalance = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transaction/create`, {
@@ -28,12 +35,17 @@ const AddTransaction: React.FC = () => {
         deducted: deducted,
         amount: amount,
         categoryId: selectedCategory,
-        comment: "",
+        comment: comment,
         groupId: selectedGroup
       })
     })
 
-    const response = await updatedBalance.json();
+    if (updatedBalance.status === 200) {
+      toast.success("Transaction succesfully added!")
+      return
+    }
+
+    toast.error("Failed to add transaction!")
   }
 
   const getCategories = async () => {
@@ -80,6 +92,7 @@ const AddTransaction: React.FC = () => {
         <div className="mt-2">
           <span>Category: </span>
           <select onChange={e => handleSelectCategory(e)}>
+          <option value={undefined}>-</option>
           {categories && categories.map((category) => {
             return (
               <option 
@@ -103,6 +116,14 @@ const AddTransaction: React.FC = () => {
               })}
             </select>
           </span>
+        </div>
+        <div className="mt-2">
+          <p>Transaction comment</p>
+          <textarea
+            className="min-h-3 w-full border border-black rounded-md p-2"
+            value={comment ?? ""}
+            onChange={(e) => {setComment(e.target.value)}}
+          ></textarea>
         </div>
         <div className="my-3">
           <span>Ammount: </span>
