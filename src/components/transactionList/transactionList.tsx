@@ -8,7 +8,16 @@ const TransactionList: React.FC = () => {
   const [transactions, setTransactions] = useState<[] | transactionApiItem[]>(Array())
 
   const getTransactionList = async () => {
-    const transactionListResponse  = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transaction/getList`)
+    const transactionListResponse  = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transaction/getList`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        pageLimit: 10,
+        descOrder: true
+      })
+    })
 
     const transactionData = await transactionListResponse.json();
 
@@ -21,7 +30,7 @@ const TransactionList: React.FC = () => {
 
   return (
     <div>
-      History
+      Latest
       {transactions && transactions.map((transaction) => {
         return (
           <TransactionCard key={transaction.id} transaction={transaction} />
