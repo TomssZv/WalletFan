@@ -42,7 +42,7 @@ const TopBar: React.FC = () => {
   }, [transactionList])
 
   return (
-    <div>
+    <div className="flex justify-end">
       <BalanceStoreProvider>
         {balance === 0 || balance ?
           <Balance

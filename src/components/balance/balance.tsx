@@ -19,7 +19,7 @@ const Balance: React.FC<BalanceProps> = (props: BalanceProps) => {
   }, [propsBalance])
 
   return (
-    <div className="text-end">
+    <div className="border border-black rounded-lg py-3 px-8">
         {balance}$
     </div>
   )
