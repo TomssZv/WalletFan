@@ -1,11 +1,13 @@
 'use client'
 
-import { transactionApiItem } from "@/common/types/global";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import TransactionCard from "../transactionCard/TransactionCard";
+import { useTransactionStore } from "@/providers/transactionStoreProvider";
 
 const TransactionList: React.FC = () => {
-  const [transactions, setTransactions] = useState<[] | transactionApiItem[]>(Array())
+  const { transactionList, setTransactionList } = useTransactionStore(
+    (state) => state,
+  );
 
   const getTransactionList = async () => {
     const transactionListResponse  = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transaction/getList`, {
@@ -21,17 +23,19 @@ const TransactionList: React.FC = () => {
 
     const transactionData = await transactionListResponse.json();
 
-    setTransactions(transactionData)
+    if (JSON.stringify(transactionData) !== JSON.stringify(transactionList)) {
+      setTransactionList(transactionData)
+    }
   }
 
   useEffect(() => {
     getTransactionList()
-  }, [])
+  }, [transactionList])
 
   return (
     <div>
       Latest
-      {transactions && transactions.map((transaction) => {
+      {transactionList && transactionList.map((transaction) => {
         return (
           <TransactionCard key={transaction.id} transaction={transaction} />
         )

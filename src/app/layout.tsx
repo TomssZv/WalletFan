@@ -4,6 +4,7 @@ import TopBar from "../components/topBar/topBar";
 import "./globals.css";
 import { BalanceStoreProvider } from "@/providers/balanceStoreProvider";
 import { Toaster } from "react-hot-toast";
+import { TransactionStoreProvider } from "@/providers/transactionStoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,13 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <TopBar />
-        <div className="flex justify-evenly">
-          <BalanceStoreProvider>
-            <Toaster position="bottom-left" />
-            {children}
-          </BalanceStoreProvider>
-        </div>
+        <BalanceStoreProvider>
+          <TransactionStoreProvider>
+            <TopBar />
+            <div className="flex justify-evenly">
+                  <Toaster position="bottom-left" />
+                  {children}
+            </div>
+         </TransactionStoreProvider>
+        </BalanceStoreProvider>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import { useState, FormEvent } from "react";
+import toast from "react-hot-toast";
 
 interface GroupFormProps {
   isFormOpen: Function 
@@ -11,7 +12,7 @@ const GroupForm: React.FC<GroupFormProps> = ({ isFormOpen }) => {``
     e.preventDefault()
 
     if (!groupName) {
-      console.error("No Group name provided")
+      toast.error("No Group name provided")
       return;
     }
 

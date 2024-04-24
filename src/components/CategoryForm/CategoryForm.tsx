@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import toast from "react-hot-toast";
 
 interface CategoryFormProps {
   isFormOpen: Function 
@@ -11,7 +12,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ isFormOpen }) => {
     e.preventDefault()
 
     if (!categoryName) {
-      console.error("No category name provided")
+      toast.error("No category name provided")
       return;
     }
 

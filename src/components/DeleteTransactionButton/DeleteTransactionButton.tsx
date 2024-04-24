@@ -1,11 +1,16 @@
 import Image from 'next/image';
 import toast from 'react-hot-toast';
+import { useTransactionStore } from "@/providers/transactionStoreProvider";
 
 interface DeleteTransactionButtonProps {
-  transactionId: number
+  transactionId: number,
 }
 
 const DeleteTransactionButton: React.FC<DeleteTransactionButtonProps> = ({ transactionId }) => {
+  const { removeTransaction } = useTransactionStore(
+    (state) => state
+  );
+
   const handleClick = async () => {
     const deleteTransaction = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transaction/delete`, {
       method: 'POST',
@@ -19,6 +24,7 @@ const DeleteTransactionButton: React.FC<DeleteTransactionButtonProps> = ({ trans
 
     if (deleteTransaction.status === 200) {
       toast.success("Transaction succesfully deleted!")
+      removeTransaction(transactionId)
       return
     }
 

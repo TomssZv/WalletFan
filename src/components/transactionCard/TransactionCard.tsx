@@ -6,7 +6,7 @@ import TransactionComment from "../TransactionComment/TransactionComment";
 import Image from "next/image"
 
 interface TransactionCardProps {
-  transaction: transactionApiItem
+  transaction: transactionApiItem,
 }
 
 const TransactionCard: React.FC<TransactionCardProps> = ({ transaction }) => {

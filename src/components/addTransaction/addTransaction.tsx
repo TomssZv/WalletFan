@@ -3,6 +3,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import TransactionButtonWrapper from "../transactionButtonWrapper/transactionButtonWrapper"
 import toast from "react-hot-toast"
+import { useTransactionStore } from "@/providers/transactionStoreProvider"
 
 const AddTransaction: React.FC = () => {
   const [amount, setAmount] = useState(0)
@@ -12,6 +13,10 @@ const AddTransaction: React.FC = () => {
   const [selectedGroup, setSelectedGroup] = useState<null | number>(null)
   const [groups, setGroups] = useState(Array())
   const [comment, setComment] = useState<null | string>(null)
+
+  const { transactionList, setTransactionList } = useTransactionStore(
+    (state) => state,
+  );
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
@@ -26,7 +31,7 @@ const AddTransaction: React.FC = () => {
       return
     }
 
-    const updatedBalance = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transaction/create`, {
+    const addTransaction = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transaction/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +45,11 @@ const AddTransaction: React.FC = () => {
       })
     })
 
-    if (updatedBalance.status === 200) {
+    if (addTransaction.status === 200) {
+      const transaction = await addTransaction.json()
+      setTransactionList([...transactionList, transaction])
+      setComment(null)
+      setAmount(0)
       toast.success("Transaction succesfully added!")
       return
     }

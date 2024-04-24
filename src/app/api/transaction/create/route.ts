@@ -42,7 +42,10 @@ export async function POST(request: Request) {
       comment: comment,
       categoryId: categoryId,
       groupId: groupId 
-    }
+    },
+    include: {
+      category: true
+    },
   })
 
   return NextResponse.json(transaction);
