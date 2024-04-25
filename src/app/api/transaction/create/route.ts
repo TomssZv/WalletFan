@@ -21,6 +21,23 @@ export async function POST(request: Request) {
 
   const newBalance = deducted ? parseFloat(oldBalance) - parseFloat(amount) : parseFloat(oldBalance) + parseFloat(amount);
 
+  const transaction = await prisma.transaction.create({
+    data: {
+      amount: amount,
+      deducted: deducted,
+      isLongTerm: false,
+      comment: comment,
+      category: { 
+        connect: {
+          id: categoryId
+        }
+      },
+      group: {
+        connect: groupId ? {id: groupId} : undefined
+      }
+    }
+  })
+
   const balance = await prisma.balance.update({
     where: {
       id: 1
@@ -30,23 +47,22 @@ export async function POST(request: Request) {
     },
   })
 
-  if (!balance) {
-    return NextResponse.json({}, {status: 500, statusText: "Something went wrong"})
-  }
+  balance
 
-  const transaction = await prisma.transaction.create({
-    data: {
-      amount: amount,
-      deducted: deducted,
-      isLongTerm: false,
-      comment: comment,
-      categoryId: categoryId,
-      groupId: groupId 
+  const transactionObject = await prisma.transaction.findFirst({
+    where: {
+      id: transaction.id
     },
     include: {
       category: true
-    },
+    }
   })
 
-  return NextResponse.json(transaction);
+  if (!transactionObject) {
+    return NextResponse.json({}, {status: 500, statusText: "Something went wrong"})
+  }
+
+  console.log(categoryId)
+
+  return NextResponse.json(transactionObject);
 }

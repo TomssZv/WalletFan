@@ -24,7 +24,7 @@ model Transaction {
   amount Float 
   deducted Boolean
   isLongTerm Boolean @default(false)
-  comment String
+  comment String?
   createdAt DateTime @default(now())
   category Category @relation(references: [id], fields: [categoryId])
   categoryId Int
