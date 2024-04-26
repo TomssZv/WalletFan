@@ -5,6 +5,7 @@ import Balance from "../balance/balance";
 import { useTransactionStore } from "@/providers/transactionStoreProvider";
 import { useBalanceStore } from "@/providers/balanceStoreProvider";
 import { useEffect } from "react";
+import Link from "next/link"
 
 const TopBar: React.FC = () => {
   const { transactionList } = useTransactionStore(
@@ -42,7 +43,8 @@ const TopBar: React.FC = () => {
   }, [transactionList])
 
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-between mb-6">
+      <Link className="p-3 border-black border rounded-lg" href="/analytics">Analytics</Link>
       <BalanceStoreProvider>
         {balance === 0 || balance ?
           <Balance
