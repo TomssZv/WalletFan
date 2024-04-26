@@ -28,7 +28,7 @@ model Transaction {
   createdAt DateTime @default(now())
   category Category @relation(references: [id], fields: [categoryId])
   categoryId Int
-  group Group? @relation(fields: [groupId], references: [id])
+  group TransactionGroup? @relation(fields: [groupId], references: [id])
   groupId Int?
   longTerm LongTermTransactions?
 }
@@ -42,7 +42,7 @@ model LongTermTransactions {
   transactionId Int @unique
 }
 
-model Group {
+model TransactionGroup {
   id  Int @id @default(autoincrement())
   name  String
   transaction Transaction[]

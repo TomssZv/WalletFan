@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   const data = await request.json()
   const { name } = data;
 
-  const group = await prisma.group.create({
+  const group = await prisma.transactionGroup.create({
     data: {
       name: name
     }
