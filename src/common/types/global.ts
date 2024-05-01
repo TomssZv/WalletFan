@@ -1,4 +1,10 @@
-export interface transactionApiItem {
+
+export interface category {
+  id: number,
+  name: string
+}
+
+export interface transaction {
   id: number,
   amount: number,
   deducted: boolean,
@@ -8,9 +14,4 @@ export interface transactionApiItem {
   categoryId: number,
   groupId: number | null,
   category: category
-}
-
-export interface category {
-  id: number,
-  name: string
 }

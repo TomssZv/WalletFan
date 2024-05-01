@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { transactionApiItem } from "../../common/types/global"
+import { transaction } from "../../common/types/global"
 import formatDate from "../../helpers/formatDate/formatDate"
 import DeleteTransactionButton from "../DeleteTransactionButton/DeleteTransactionButton";
 import TransactionComment from "../TransactionComment/TransactionComment";
 import Image from "next/image"
+import { analyticsApiItem } from "@/common/types/api";
 
 interface TransactionCardProps {
-  transaction: transactionApiItem,
+  transaction: transaction,
 }
 
 const TransactionCard: React.FC<TransactionCardProps> = ({ transaction }) => {
@@ -40,7 +41,7 @@ const TransactionCard: React.FC<TransactionCardProps> = ({ transaction }) => {
       </div>
       <span>{transaction.category.name}</span>
       <span>{transaction.deducted}</span>
-      <p>Ammount: <span className={`${transaction.deducted ? "text-red-300" : "text-green-300"}`}>{transaction.deducted ? "-" : "+"}{transaction.amount}$</span></p>
+      <p>Ammount: <span className={`${transaction.deducted ? "text-red-300" : "text-green-300"}`}>{transaction.deducted === false && "+"}{transaction.amount}$</span></p>
     </div>
   )
 }

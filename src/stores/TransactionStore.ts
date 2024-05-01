@@ -1,12 +1,12 @@
 import { createStore } from "zustand";
-import { transactionApiItem } from "../common/types/global"
+import { transaction } from "../common/types/global"
 
 export type TransactionState = {
-  transactionList: transactionApiItem[]
+  transactionList: transaction[]
 }
 
 export type TransactionActions = {
-  setTransactionList: (list: transactionApiItem[]) => void
+  setTransactionList: (list: transaction[]) => void
   removeTransaction: (id: number) => void
 }
 

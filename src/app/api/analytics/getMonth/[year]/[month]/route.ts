@@ -3,12 +3,21 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(request: NextRequest, { params }: { params: { year: string, month: string } }) {
   const { year, month } = params;
-  console.log(params)
-  const transactions = await prisma.$queryRaw`
-    select *, cat.name as categoryName, cat.id as categoryId, gr.name as groupName, gr.id as groupId from transaction
-    inner join category as cat on cat.id = transaction.categoryId
-    left join transactionGroup as gr on gr.id = transaction.groupId
-    where MONTHNAME(createdAt) = ${month} and YEAR(createdAt) = ${year};`
+
+  const transactionIds: {id: number}[] = await prisma.$queryRaw`
+    SELECT transaction.id FROM transaction
+    WHERE MONTHNAME(createdAt) = ${month} and YEAR(createdAt) = ${year} ORDER BY transaction.createdAt DESC`
+
+  const transactions = await prisma.transaction.findMany({
+    where: {
+      id: {
+        in: transactionIds.map(transaction => transaction.id)
+      }
+    },
+    include: {
+      category: true
+    }
+  })
 
   if (!transactions) {
     return NextResponse.json({}, {status: 500, statusText: "Transactions not found!"})

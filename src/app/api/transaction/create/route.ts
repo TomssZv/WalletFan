@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 
   const transaction = await prisma.transaction.create({
     data: {
-      amount: amount,
+      amount: deducted ? -amount : +amount,
       deducted: deducted,
       isLongTerm: false,
       comment: comment,
@@ -61,8 +61,6 @@ export async function POST(request: Request) {
   if (!transactionObject) {
     return NextResponse.json({}, {status: 500, statusText: "Something went wrong"})
   }
-
-  console.log(categoryId)
 
   return NextResponse.json(transactionObject);
 }
