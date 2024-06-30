@@ -146,13 +146,13 @@ const AddTransaction: React.FC = () => {
         <div className="flex gap-3">
           <TransactionButtonWrapper>
             <button
-              onClick={(e) => {e.preventDefault(), setDeducted(true)}}
+              onClick={(e) => {e.preventDefault(), setDeducted(deducted => true)}}
             >-</button>
           </TransactionButtonWrapper>
           <TransactionButtonWrapper>
             <button
               className="w-fit h-fit"
-              onClick={(e) => {e.preventDefault(), setDeducted(false)}}
+              onClick={(e) => {e.preventDefault(), setDeducted(deducted => false)}}
             >+</button>
           </TransactionButtonWrapper>
         </div>
