@@ -1,0 +1,28 @@
+.rdp {
+  padding: 16px;
+}
+
+.rdp-table {
+  margin-top: 16px;
+}
+
+tr {
+  padding: 8px;
+}
+
+table button {
+  width: 100%;
+  padding: 6px;
+  margin: 2px;
+}
+
+table button:hover {
+  background-color: blue;
+  border-radius: 10px;
+  color: white;
+}
+
+.rdp-caption {
+  display: flex;
+  justify-content: space-between;
+}

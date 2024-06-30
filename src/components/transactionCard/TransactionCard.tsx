@@ -4,7 +4,7 @@ import formatDate from "../../helpers/formatDate/formatDate"
 import DeleteTransactionButton from "../DeleteTransactionButton/DeleteTransactionButton";
 import TransactionComment from "../TransactionComment/TransactionComment";
 import Image from "next/image"
-import { analyticsApiItem } from "@/common/types/api";
+import { DayPickerModal } from "../DayPickerModal/DayPickerModal";
 
 interface TransactionCardProps {
   transaction: transaction,
@@ -21,7 +21,9 @@ const TransactionCard: React.FC<TransactionCardProps> = ({ transaction }) => {
     <div className="border p-1 rounded mb-2 border-black">
       <div className="flex justify-between">
         <div>
-          <h4>{formatDate(transaction.createdAt)}</h4>
+          <DayPickerModal transactionId={transaction.id}>
+            <h4>{formatDate(transaction.createdAt)}</h4>
+          </DayPickerModal>
         </div>
         <div className="flex items-center gap-2">
           {transaction.comment && 

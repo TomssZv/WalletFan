@@ -5,7 +5,7 @@ import TransactionCard from "../transactionCard/TransactionCard";
 import { useTransactionStore } from "@/providers/transactionStoreProvider";
 
 const TransactionList: React.FC = () => {
-  const { transactionList, setTransactionList } = useTransactionStore(
+  const { transactionList, setTransactionList, refech, refechTransactions } = useTransactionStore(
     (state) => state,
   );
 
@@ -30,7 +30,7 @@ const TransactionList: React.FC = () => {
 
   useEffect(() => {
     getTransactionList()
-  }, [transactionList])
+  }, [transactionList, refech])
 
   return (
     <div>
