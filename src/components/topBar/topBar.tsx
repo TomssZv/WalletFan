@@ -44,7 +44,10 @@ const TopBar: React.FC = () => {
 
   return (
     <div className="flex justify-between mb-6">
-      <Link className="p-3 border-black border rounded-lg" href="/analytics">Analytics</Link>
+      <div className="flex gap-2">
+        <Link className="p-3 border-black border rounded-lg" href="/">Home</Link>
+        <Link className="p-3 border-black border rounded-lg" href="/analytics">Analytics</Link>
+      </div>
       <BalanceStoreProvider>
         {balance === 0 || balance ?
           <Balance

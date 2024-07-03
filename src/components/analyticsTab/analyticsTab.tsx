@@ -42,7 +42,7 @@ export const AnalyticsTab: React.FC<analyticsTabProps> = ({ title }) => {
     
     setIsInit(false)
 
-    const url = `${process.env.NEXT_PUBLIC_API_URL + routes.month}/${analyticData.createdAt.substring(0, 4)}/${analyticData.month}${preciseId ? "/"+preciseId : ''}`
+    const url = `${process.env.NEXT_PUBLIC_API_URL + routes.month}/${analyticData.createdAt.substring(0, 4)}/${analyticData.month}${preciseId ? "/" + preciseId : ''}`
     const response = await fetch(url)
     const data = await response.json()
 
