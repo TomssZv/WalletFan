@@ -7,6 +7,7 @@ import { AnalyticsTabRoutes } from "../../helpers/analyticsTabRoutes/analyticsTa
 import { analyticsApiItem } from "@/common/types/api";
 import TransactionCard from "@/components/transactionCard/TransactionCard"
 import { transaction } from "@/common/types/global"
+import { GroupedTransactionCards } from "@/components/GroupedTransactionCards/GroupedTransactionCards"
 
 const tabs = [
   {
@@ -46,6 +47,18 @@ const Page: React.FC = () => {
 
   }, [selectedTab, selectedMonth])
 
+  const openMonth = (data: analyticsApiItem) => {
+    fetchMonth(data as analyticsApiItem)
+  }
+
+  const analytics = (!selectedMonth && selectedTab.title === analyticsTabs.Summary) ? 
+    analyticsData.map(data => {
+      return <div onClick={() => {fetchMonth(data as analyticsApiItem)}} key={data.id} className="rounded p-3 border border-black mb-3 pointer">
+        <AnalyticsTab data={data as analyticsApiItem} />
+      </div>
+    }) :
+    <GroupedTransactionCards openMonth={openMonth} transactions={analyticsData as analyticsApiItem[]} />
+
   const fetchMonth = async (analyticData: analyticsApiItem) => {
 
     let preciseId;
@@ -84,11 +97,7 @@ const Page: React.FC = () => {
           {tab.title}
         </button>
       ))}
-      {selectedMonth ? analyticsData.map(data => {return <TransactionCard key={data.id} editDate={false} transaction={data as transaction} />}) : analyticsData.map(data => {
-        return <div onClick={() => {fetchMonth(data as analyticsApiItem)}} key={data.id} className="rounded p-3 border border-black mb-3 pointer">
-          <AnalyticsTab data={data as analyticsApiItem} />
-        </div>
-      })}
+      {selectedMonth ? analyticsData.map(data => {return <TransactionCard key={data.id} editDate={false} transaction={data as transaction} />}) : analytics}
     </div>
   )
 }
