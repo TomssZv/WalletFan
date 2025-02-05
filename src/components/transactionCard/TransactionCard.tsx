@@ -8,10 +8,13 @@ import { DayPickerModal } from "../DayPickerModal/DayPickerModal";
 
 interface TransactionCardProps {
   transaction: transaction,
+  editDate?: boolean
 }
 
-const TransactionCard: React.FC<TransactionCardProps> = ({ transaction }) => {
+const TransactionCard: React.FC<TransactionCardProps> = (props: TransactionCardProps) => {
   const [showComment, setShowComment] = useState(false)
+
+  const {transaction, editDate = true} = props;
 
   const handleShowComment = (value: boolean) => {
     setShowComment(value)
@@ -21,9 +24,9 @@ const TransactionCard: React.FC<TransactionCardProps> = ({ transaction }) => {
     <div className="border p-1 rounded mb-2 border-black">
       <div className="flex justify-between">
         <div>
-          <DayPickerModal transactionId={transaction.id}>
+          {editDate ? <DayPickerModal transactionId={transaction.id}>
             <h4>{formatDate(transaction.createdAt)}</h4>
-          </DayPickerModal>
+          </DayPickerModal> : <h4>{formatDate(transaction.createdAt)}</h4>}
         </div>
         <div className="flex items-center gap-2">
           {transaction.comment && 

@@ -84,7 +84,7 @@ const Page: React.FC = () => {
           {tab.title}
         </button>
       ))}
-      {selectedMonth ? analyticsData.map(data => {return <div key={data.id}><TransactionCard transaction={data as transaction} /></div>}) : analyticsData.map(data => {
+      {selectedMonth ? analyticsData.map(data => {return <TransactionCard key={data.id} editDate={false} transaction={data as transaction} />}) : analyticsData.map(data => {
         return <div onClick={() => {fetchMonth(data as analyticsApiItem)}} key={data.id} className="rounded p-3 border border-black mb-3 pointer">
           <AnalyticsTab data={data as analyticsApiItem} />
         </div>
