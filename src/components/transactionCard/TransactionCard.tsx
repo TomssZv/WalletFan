@@ -20,13 +20,17 @@ const TransactionCard: React.FC<TransactionCardProps> = (props: TransactionCardP
     setShowComment(value)
   }
 
+  const dayPicker = editDate ? 
+    <DayPickerModal transactionId={transaction.id}>
+      <h4>{formatDate(transaction.createdAt)}</h4>
+    </DayPickerModal> : 
+    <h4>{formatDate(transaction.createdAt)}</h4>
+
   return (
     <div className="border p-1 rounded mb-2 border-black">
       <div className="flex justify-between">
         <div>
-          {editDate ? <DayPickerModal transactionId={transaction.id}>
-            <h4>{formatDate(transaction.createdAt)}</h4>
-          </DayPickerModal> : <h4>{formatDate(transaction.createdAt)}</h4>}
+          {dayPicker}
         </div>
         <div className="flex items-center gap-2">
           {transaction.comment && 
